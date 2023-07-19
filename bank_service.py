@@ -1,6 +1,7 @@
 import logging
 import time
 from datetime import timedelta, date
+from typing import List, Tuple
 
 import schedule as schedule
 
@@ -20,25 +21,26 @@ root_logger.addHandler(console_handler)
 
 
 class BankService:
-    def __init__(self):
-        self.processor_api = ProcessorApi()
-        self.data_layer = DataLayer("bank.db")
+    def __init__(self, db_name):
+        self._processor_api = ProcessorApi()
+        self._data_layer = DataLayer(db_name)
 
-    def add_account(self, account: Account):
-        self.data_layer.add_account(account)
+    def add_account(self, account: Account) -> Status:
+        self._data_layer.account_data.add_account(account)
         logging.info(f"Account added: {account.account_id}")
+        return Status.SUCCESS
 
-    def perform_advance(self, dst_bank_account: int, amount):
+    def perform_advance(self, dst_bank_account: int, amount: float) -> int:
         transaction = Transaction(dst_bank_account=dst_bank_account, amount=amount, direction=Direction.CREDIT.value,
                                   date=date.today())
         try:
-            account: Account = self.data_layer.get_account(dst_bank_account)
+            account: Account = self._data_layer.account_data.get_account(dst_bank_account)
             self.perform_transaction(transaction=transaction)
             self.add_loan(account=account, transaction=transaction)
             logging.info(f"Advance performed: Transaction ID: {transaction.transaction_id}")
             return transaction.transaction_id
         except AccountNotExist:
-            transaction.status = Status.FAIL
+            transaction.status = Status.FAIL.value
             self.add_transaction_to_data_layer(transaction)
             logging.error("Account does not exist.")
             raise
@@ -46,22 +48,24 @@ class BankService:
             logging.error("Transaction failed.")
             raise
 
-    def perform_transaction(self, transaction: Transaction):
+    def perform_transaction(self, transaction: Transaction) -> int:
         try:
-            transaction.status, transaction.transaction_id = self.processor_api.perform_transaction(transaction)
+            transaction.status, transaction.transaction_id = self._processor_api.perform_transaction(transaction)
             logging.info(f"Transaction performed: Transaction ID: {transaction.transaction_id}")
+            return transaction.transaction_id
         except TransactionError:
-            transaction.status = Status.FAIL
+            transaction.status = Status.FAIL.value
             logging.error("Transaction failed.")
             raise
         finally:
             self.add_transaction_to_data_layer(transaction)
 
-    def add_transaction_to_data_layer(self, transaction):
-        self.data_layer.add_transaction(transaction)
+    def add_transaction_to_data_layer(self, transaction: Transaction) -> Status:
+        self._data_layer.transaction_data.add_transaction(transaction)
         logging.info(f"Transaction added to DataBase: Transaction ID: {transaction.transaction_id}")
+        return Status.SUCCESS
 
-    def add_loan(self, account: Account, transaction: Transaction):
+    def add_loan(self, account: Account, transaction: Transaction) -> Status:
         loan_transactions = []
         loan_debt = transaction.amount
 
@@ -76,11 +80,12 @@ class BankService:
 
         account.loan = Loan(debt=loan_debt, transactions=loan_transactions)
         account.balance += transaction.amount
-        self.data_layer.update_account(account=account)
+        self._data_layer.account_data.update_account(account=account)
         logging.info(f"Loan added for Account: {account.account_id}")
+        return Status.SUCCESS
 
-    def loan_payments(self):
-        accounts = self.data_layer.get_all_accounts()
+    def loan_payments(self) -> Status:
+        accounts = self._data_layer.account_data.get_all_accounts()
 
         for account in accounts:
             if account.loan:
@@ -90,8 +95,10 @@ class BankService:
                     try:
                         self.perform_transaction(transaction=transaction)
                         account.balance -= transaction.amount
-                        self.data_layer.update_account(transaction)
+                        self._data_layer.account_data.update_account(transaction)
                         logging.info(f"Loan payment performed for Account: {account.account_id}")
+                        return Status.SUCCESS
+
                     except TransactionError:
                         last_payment = -1
                         transaction.date = account.loan.transactions[last_payment] + timedelta(days=PAYMENTS_DELTA)
@@ -99,14 +106,14 @@ class BankService:
                         logging.error(f"Loan payment failed for Account: {account.account_id}")
                         raise
 
-    def download_report(self):
-        report = self.processor_api.download_report()
+    def download_report(self) -> [Tuple[int, str]]:
+        report = self._processor_api.download_report()
         logging.info("Report downloaded")
         return report
 
 
 def perform_payments():
-    b = BankService()
+    b = BankService("bank.db")
     b.loan_payments()
     logging.info("payments performed.")
 

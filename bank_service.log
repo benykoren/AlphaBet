@@ -1,0 +1,168 @@
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+ERROR:DataLayer:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 113, in add_transaction
+    self._cur.execute(
+sqlite3.InterfaceError: Error binding parameter 6 - probably unsupported type.
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+ERROR:DataLayer:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 113, in add_transaction
+    self._cur.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: transactions.transaction_id
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 3
+INFO:DataLayer:Transaction added: Transaction ID: 3
+INFO:root:Transaction added to DataBase: Transaction ID: 3
+INFO:DataLayer:Account updated: Account ID: 1
+INFO:root:Loan added for Account: 1
+INFO:root:Advance performed: Transaction ID: 3
+INFO:DataLayer:All accounts retrieved
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 3
+ERROR:DataLayer:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 113, in add_transaction
+    self._cur.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: transactions.transaction_id
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:DataLayer:Transaction added: Transaction ID: None
+INFO:root:Transaction added to DataBase: Transaction ID: None
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 0
+INFO:DataLayer:Transaction added: Transaction ID: 0
+INFO:root:Transaction added to DataBase: Transaction ID: 0
+INFO:DataLayer:Account updated: Account ID: 1
+INFO:root:Loan added for Account: 1
+INFO:root:Advance performed: Transaction ID: 0
+INFO:DataLayer:All accounts retrieved
+INFO:DataLayer:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 1
+INFO:DataLayer:Transaction added: Transaction ID: 1
+INFO:root:Transaction added to DataBase: Transaction ID: 1
+INFO:DataLayer:Account updated: Account ID: 1
+INFO:root:Loan added for Account: 1
+INFO:root:Advance performed: Transaction ID: 1
+INFO:DataLayer:All accounts retrieved
+INFO:AccountRepository:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 1
+ERROR:TransactionRepository:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 123, in add_transaction
+    self._cur.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: transactions.transaction_id
+INFO:AccountRepository:All accounts deleted
+INFO:TransactionRepository:All transactions deleted
+ERROR:TransactionRepository:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\bank_service.py", line 37, in perform_advance
+    account: Account = self._data_layer.account_repository.get_account(dst_bank_account)
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 80, in get_account
+    raise AccountNotExist
+exceptions.AccountNotExist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 123, in add_transaction
+    self._cur.execute(
+sqlite3.InterfaceError: Error binding parameter 6 - probably unsupported type.
+ERROR:TransactionRepository:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\bank_service.py", line 37, in perform_advance
+    account: Account = self._data_layer.account_repository.get_account(dst_bank_account)
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 80, in get_account
+    raise AccountNotExist
+exceptions.AccountNotExist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 123, in add_transaction
+    self._cur.execute(
+sqlite3.InterfaceError: Error binding parameter 6 - probably unsupported type.
+ERROR:TransactionRepository:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:/Users/bnyko/Desktop/interviews/AlphaBet/bank_service.py", line 37, in perform_advance
+    account: Account = self._data_layer.account_repository.get_account(dst_bank_account)
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 80, in get_account
+    raise AccountNotExist
+exceptions.AccountNotExist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 123, in add_transaction
+    self._cur.execute(
+sqlite3.InterfaceError: Error binding parameter 6 - probably unsupported type.
+INFO:TransactionRepository:Transaction added: Transaction ID: None
+INFO:root:Transaction added to DataBase: Transaction ID: None
+ERROR:root:Account does not exist.
+INFO:AccountRepository:Account added: Account ID: 1
+INFO:root:Account added: 1
+INFO:AccountRepository:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 1
+ERROR:TransactionRepository:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 123, in add_transaction
+    self._cur.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: transactions.transaction_id
+INFO:AccountRepository:Account added: Account ID: 1
+INFO:root:Account added: 1
+INFO:AccountRepository:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+INFO:TransactionRepository:Transaction added: Transaction ID: 2
+INFO:root:Transaction added to DataBase: Transaction ID: 2
+INFO:AccountRepository:Account updated: Account ID: 1
+INFO:root:Loan added for Account: 1
+INFO:root:Advance performed: Transaction ID: 2
+INFO:AccountRepository:All accounts retrieved
+INFO:AccountData:All accounts deleted
+INFO:TransactionData:All transactions deleted
+INFO:AccountData:All accounts deleted
+INFO:TransactionData:All transactions deleted
+INFO:AccountData:All accounts deleted
+INFO:TransactionData:All transactions deleted
+INFO:AccountData:Account added: Account ID: 1
+INFO:root:Account added: 1
+INFO:AccountData:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+INFO:TransactionData:Transaction added: Transaction ID: 2
+INFO:root:Transaction added to DataBase: Transaction ID: 2
+INFO:AccountData:Account updated: Account ID: 1
+INFO:root:Loan added for Account: 1
+INFO:root:Advance performed: Transaction ID: 2
+INFO:AccountData:All accounts retrieved
+INFO:AccountData:All accounts deleted
+INFO:TransactionData:All transactions deleted
+INFO:AccountData:Account added: Account ID: 1
+INFO:root:Account added: 1
+INFO:AccountData:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+INFO:TransactionData:Transaction added: Transaction ID: 2
+INFO:root:Transaction added to DataBase: Transaction ID: 2
+INFO:AccountData:Account updated: Account ID: 1
+INFO:root:Loan added for Account: 1
+INFO:root:Advance performed: Transaction ID: 2
+INFO:AccountData:All accounts retrieved
+INFO:AccountData:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 2
+ERROR:TransactionData:An error occurred while adding a transaction:
+Traceback (most recent call last):
+  File "C:\Users\bnyko\Desktop\interviews\AlphaBet\data_layer.py", line 123, in add_transaction
+    self._cur.execute(
+sqlite3.IntegrityError: UNIQUE constraint failed: transactions.transaction_id
+INFO:AccountData:Account retrieved: Account ID: 1
+INFO:root:Transaction performed: Transaction ID: 0
+INFO:TransactionData:Transaction added: Transaction ID: 0
+INFO:root:Transaction added to DataBase: Transaction ID: 0
+INFO:AccountData:Account updated: Account ID: 1
+INFO:root:Loan added for Account: 1
+INFO:root:Advance performed: Transaction ID: 0
+INFO:AccountData:All accounts retrieved
